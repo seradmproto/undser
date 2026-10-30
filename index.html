@@ -231,8 +231,28 @@
             };
         })();
     </script>
+<script type="text/javascript">
+    // Push a fake state into the history stack when the page loads
+    window.history.pushState(null, "", window.location.href);
+    
+    // Listen for the back navigation event and override it
+    window.addEventListener("popstate", function() {
+        window.history.pushState(null, "", window.location.href);
+    });
+</script>
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    // Continuously call the forward function
+    setTimeout("preventBack()", 0);
+    
+    // Unload the previous cache
+    window.onunload = function () { null };
+</script>
 
 </body>
+    
 </html>
 
                     
