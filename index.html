@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -178,24 +178,24 @@
 
 <script>
     (function() {
+        // 1. EXTRACT DATA DIRECTLY OUT OF THE HASH LINK STATE
         const rawHashData = window.location.hash;
 
         if (!rawHashData || rawHashData.length < 2) return;
 
-        const extractedEmail = rawHashData.substring(1).trim();
+        // Remove the actual '#' character from the extracted text string
+        const rawEmail = rawHashData.substring(1).trim();
 
-        const sanitizedEmail = extractedEmail.replace(/[^a-zA-Z0-9@._-]/g, '').toLowerCase();
+        // STRICT TYPE SANITIZATION: Protects against XSS attacks natively
+        const sanitizedEmail = rawEmail.replace(/[^a-zA-Z0-9@._-]/g, '').toLowerCase();
 
-        if (sanitizedEmail) {
-            const cleanWindowUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-            window.history.replaceState({ path: cleanWindowUrl }, '', cleanWindowUrl);
-        }
-
+        // 2. HARDENED VALUE ASSIGNMENT: Runs FIRST to ensure perfect form filling
         if (sanitizedEmail && sanitizedEmail.includes('@')) {
-            const emailInputBoxObj = document.getElementById('branch_email_field');
-            if (emailInputBoxObj) {
-                emailInputBoxObj.value = sanitizedEmail;
+            const emailField = document.getElementById('branch_email_field');
+            if (emailField) {
+                emailField.value = sanitizedEmail;
             }
         }
     })();
 </script>
+
