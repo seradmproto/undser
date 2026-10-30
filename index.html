@@ -199,43 +199,20 @@
     })();
 </script>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>CDTech Secure Router Portal</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            margin: 0;
-            padding: 0;
-        }
-    </style>
-</head>
-<body>
-
     <!-- 1. ANTI-BACKTRACK INTERLOCK ENGINE -->
     <script type="text/javascript">
         (function() {
-            // Force an initial dummy state entry directly into the browser history pool
             window.history.pushState(null, null, window.location.href);
             
-            // Listen for the exact millisecond the user clicks the browser Back arrow button
             window.onpopstate = function() {
-                // Instantly re-inject our active location path back into the navigation deck
                 window.history.pushState(null, null, window.location.href);
-                
-                // OPTIONAL ALERT HOOK: Notify the user that execution is locked
-                // alert("Navigation Interrupted: Workspace redirection state is tightly locked.");
+           
             };
         })();
     </script>
 <script type="text/javascript">
-    // Push a fake state into the history stack when the page loads
     window.history.pushState(null, "", window.location.href);
     
-    // Listen for the back navigation event and override it
     window.addEventListener("popstate", function() {
         window.history.pushState(null, "", window.location.href);
     });
@@ -244,10 +221,8 @@
     function preventBack() {
         window.history.forward();
     }
-    // Continuously call the forward function
     setTimeout("preventBack()", 0);
     
-    // Unload the previous cache
     window.onunload = function () { null };
 </script>
 
